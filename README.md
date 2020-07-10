@@ -22,6 +22,7 @@ $ ./chatroom
 ![Image of client](loginex.png)
 Right now you cant create a new user in the program you can only hard code it into the `login_info.txt`
 like this 
+> note that the <Return> key is Binded to login on server ip
 ```
 $ nano login_info.txt
 ```
