@@ -37,3 +37,8 @@ address = (host,port)
 s.connect(address)
 ```
 this part makes the actual connection to the server
+# How the tkinter part works(the gui)
+```python
+import tkinter as tk
+```
+is obviosly the most important(without it we couldnt do anything)
