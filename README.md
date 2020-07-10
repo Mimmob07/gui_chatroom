@@ -1,4 +1,5 @@
 # Gui_chatroom
+![Image of chatroom](chatroomex.png)
 Its a chatroom with a Gui login, the login is all mine but the chatroom has some inspiration from stackoverflow
 # Instalation
 ```
@@ -18,6 +19,7 @@ $ python(3) server
 $ ./chatroom
 ```
 ### Using the Client
+![Image of client](loginex.png)
 Right now you cant create a new user in the program you can only hard code it into the `login_info.txt`
 like this 
 ```
