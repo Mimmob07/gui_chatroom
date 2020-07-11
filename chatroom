@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 import tkinter as tk
-from PIL import Image, ImageTk
 import time
 import os
 import ast
-import socket,threading,sys
-#other stuff
+import socket, threading, sys
+
+# other stuff
 f = open("/Users/mimmo/ssh_login_system/login_info.txt", "r")
 contents = f.read()
 f.close()
 users = ast.literal_eval(contents)
-#variables
+# variables
 stuff = ""
 newlist = []
 login = ""
@@ -21,32 +21,36 @@ rw.title("Login")
 rw.configure(bg="grey14")
 rw.geometry("500x200")
 
+
 def echo_data(sock):
-   while True:
-      try:
-         msg = sock.recv(1024).decode('utf8')
-         msg_list.insert(tk.END, msg)
-      except OSError:
-         break
+	while True:
+		try:
+			msg = sock.recv(1024).decode('utf8')
+			msg_list.insert(tk.END, msg)
+		except OSError:
+			break
+
 
 def send(event=None):
-   msg = my_msg.get() 
-   my_msg.set("")
-   s.send(bytes(msg, "utf8"))
-   if msg == "{quit}":
-      s.close()
-      top.quit()
+	msg = my_msg.get()
+	my_msg.set("")
+	s.send(bytes(msg, "utf8"))
+	if msg == "{quit}":
+		s.close()
+		top.quit()
+
 
 def on_closing(event=None):
-    my_msg.set("{quit}")
-    send()
+	my_msg.set("{quit}")
+	send()
+
 
 def chatroom(host):
 	hot = host
 	port = 4000
 	global s
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	address = (hot,port)
+	address = (hot, port)
 	global top
 	top = tk.Tk()
 	top.title("Chat Room")
@@ -55,7 +59,7 @@ def chatroom(host):
 	messages_frame = tk.Frame(top)
 	global my_msg
 	my_msg = tk.StringVar()
-	scrollbar = tk.Scrollbar(messages_frame)  
+	scrollbar = tk.Scrollbar(messages_frame)
 	global msg_list
 	msg_list = tk.Listbox(messages_frame, height=15, width=100, yscrollcommand=scrollbar.set, bg="grey14", fg="white")
 	scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
@@ -69,12 +73,13 @@ def chatroom(host):
 
 	top.protocol("WM_DELETE_WINDOW", on_closing)
 
-	address = (host,port)
+	address = (host, port)
 	s.connect(address)
 
-	threading.Thread(target=echo_data, args = (s,)).start()
+	threading.Thread(target=echo_data, args=(s,)).start()
 
 	tk.mainloop()
+
 
 def login(self):
 	username = e1.get()
@@ -83,9 +88,58 @@ def login(self):
 	if username in users:
 		if password == users[username]:
 			rw.destroy()
-			print ("\nlogin successful!\n")
+			print("\nlogin successful!\n")
 			chatroom(servername)
-			
+
+def createnu(self):
+	username = en1.get()
+	password = en2.get()
+	servername = en3.get()
+	if username in users:
+		print("\nLogin name alredy exsist!\n")
+		exit()
+	else:
+		users[username] = password
+		stuff = contents.split('}', 1)
+		newlist = ', "' + username + '" : "' + password + '"}'
+		print(newlist)
+		f = open("/Users/mimmo/ssh_login_system/login_info.txt", "w")
+		for element in stuff:
+			f.write(element)
+		f.write(newlist)
+		f.close()
+		login = username
+		nu.destroy()
+		chatroom(servername)
+
+def new_usr():
+	rw.destroy()
+	global nu
+	nu = tk.Tk()
+	nu.title("New User")
+	nu.configure(bg="grey14")
+	nu.geometry("500x200")
+
+	d = tk.Label(nu, text="Username:", fg='white', bg='grey14').grid(row=0)
+	e = tk.Label(nu, text="Password:", fg='white', bg='grey14').grid(row=1)
+	f = tk.Label(nu, text="Server IP:", fg='white', bg='grey14').grid(row=2)
+
+	global en1
+	en1 = tk.Entry(nu)
+	global en2
+	en2 = tk.Entry(nu, show="*")
+	global en3
+	en3 = tk.Entry(nu)
+	en3.insert(0, 'ex: 127.0.0.0')
+	en3.bind("<Return>", createnu)
+
+	en1.grid(row=0, column=1)
+	en2.grid(row=1, column=1)
+	en3.grid(row=2, column=1)
+
+	nu.mainloop()
+
+
 a = tk.Label(rw, text="Username:", fg='white', bg='grey14').grid(row=0)
 b = tk.Label(rw, text="Password:", fg='white', bg='grey14').grid(row=1)
 c = tk.Label(rw, text="Server IP:", fg='white', bg='grey14').grid(row=2)
@@ -93,11 +147,13 @@ c = tk.Label(rw, text="Server IP:", fg='white', bg='grey14').grid(row=2)
 e1 = tk.Entry(rw)
 e2 = tk.Entry(rw, show="*")
 e3 = tk.Entry(rw)
+b1 = tk.Button(rw, text="New User", command=new_usr)
 e3.insert(0, 'ex: 127.0.0.0')
 e3.bind("<Return>", login)
 
 e1.grid(row=0, column=1)
 e2.grid(row=1, column=1)
 e3.grid(row=2, column=1)
+b1.grid(row=3, column=1)
 
 rw.mainloop()
