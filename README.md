@@ -38,4 +38,6 @@ and change it to
 
 # ToDo
 - [x] Make a create user page
+- [ ] Make a settings page
+- [ ] Make background music with pygame
 - [ ] Encode the login info then decode it inside the program
