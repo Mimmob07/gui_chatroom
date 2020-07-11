@@ -25,6 +25,8 @@ def handle_client(conn):
 
             if msg1 != bytes("{quit}", "utf8"):
                 broadcast(msg1, data+": ")
+            elif msg1 == bytes("{close}", "utf8"):
+                exit()
             else:
                 conn.send(bytes("{quit}", "utf8"))
                 conn.close()
