@@ -37,5 +37,5 @@ and change it to
 > btw you can have spaces in your username and password(I just have a habit of putting underscores instead of spaces)
 
 # ToDo
-- [ ] Make a create user page
+- [x] Make a create user page
 - [ ] Encode the login info then decode it inside the program
