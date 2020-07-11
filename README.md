@@ -38,5 +38,5 @@ and change it to
 
 # ToDo
 - [x] Make a create user page
-- [ ] Make a settings page
+- [x] Make a settings page
 - [ ] Encode the login info then decode it inside the program
