@@ -4,13 +4,14 @@ import time
 import os
 import ast
 import socket, threading, sys
-
 # other stuff
 f = open("/Users/mimmo/ssh_login_system/login_info.txt", "r")
 contents = f.read()
 f.close()
 users = ast.literal_eval(contents)
 # variables
+global bag
+bag = "grey14"
 stuff = ""
 newlist = []
 login = ""
@@ -37,14 +38,36 @@ def send(event=None):
 	s.send(bytes(msg, "utf8"))
 	if msg == "{quit}":
 		s.close()
-		top.quit()
+		top.destroy()
+		exit()
 
 
 def on_closing(event=None):
 	my_msg.set("{quit}")
 	send()
 
+def q():
+	sett.destroy()
 
+def ex():
+	s.close()
+	top.destroy()
+	exit()
+
+def settings():
+	global sett
+	sett = tk.Tk()
+	sett.title("Settings")
+	sett.configure(bg=bag)
+	sett.geometry("500x200")
+
+	la = tk.Label(sett, text="Close: ", fg='white', bg=bag).grid(row=0)
+	butters = tk.Button(sett, text="close", command=q).grid(row=0, column=1)
+
+	la1 = tk.Label(sett, text="Quit: ", fg='white', bg=bag).grid(row=1)
+	butters1 = tk.Button(sett, text="quit", command=ex).grid(row=1, column=1)
+
+	tk.mainloop()
 def chatroom(host):
 	hot = host
 	port = 4000
@@ -54,14 +77,14 @@ def chatroom(host):
 	global top
 	top = tk.Tk()
 	top.title("Chat Room")
-	top.configure(bg="grey14")
+	top.configure(bg=bag)
 
 	messages_frame = tk.Frame(top)
 	global my_msg
 	my_msg = tk.StringVar()
 	scrollbar = tk.Scrollbar(messages_frame)
 	global msg_list
-	msg_list = tk.Listbox(messages_frame, height=15, width=100, yscrollcommand=scrollbar.set, bg="grey14", fg="white")
+	msg_list = tk.Listbox(messages_frame, height=15, width=100, yscrollcommand=scrollbar.set, bg=bag, fg="white")
 	scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 	msg_list.pack(side=tk.LEFT, fill=tk.BOTH)
 	msg_list.pack()
@@ -70,6 +93,9 @@ def chatroom(host):
 	entry_field = tk.Entry(top, textvariable=my_msg, width="100")
 	entry_field.bind("<Return>", send)
 	entry_field.pack()
+
+	but = tk.Button(top, text="settings", command=settings)
+	but.pack()
 
 	top.protocol("WM_DELETE_WINDOW", on_closing)
 
@@ -143,6 +169,7 @@ def new_usr():
 a = tk.Label(rw, text="Username:", fg='white', bg='grey14').grid(row=0)
 b = tk.Label(rw, text="Password:", fg='white', bg='grey14').grid(row=1)
 c = tk.Label(rw, text="Server IP:", fg='white', bg='grey14').grid(row=2)
+d = tk.Label(rw, text="New User:", fg='white', bg='grey14').grid(row=3)
 
 e1 = tk.Entry(rw)
 e2 = tk.Entry(rw, show="*")
