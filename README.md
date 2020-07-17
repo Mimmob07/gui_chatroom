@@ -39,3 +39,4 @@ and change it to
 # ToDo
 - [x] Make a create user page
 - [x] Make a settings page
+- [x] Make bot commands
