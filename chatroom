@@ -11,11 +11,12 @@ f.close()
 users = ast.literal_eval(contents)
 # variables
 global bag
-bag = "grey14"
 stuff = ""
 newlist = []
 login = ""
 inp = ("| => ")
+bag = "grey14"
+TK_SILENCE_DEPRECATION = 1
 
 rw = tk.Tk()
 rw.title("Login")
@@ -40,6 +41,23 @@ def send(event=None):
 		s.close()
 		top.destroy()
 		exit()
+	elif msg == "!serverip":
+		meag = "Bot: The serverip is" + servername
+		msg_list.insert(tk.END, meag)
+	elif msg == "!localip":
+		mesg = "Bot: Your ip is " + socket.gethostname()
+		msg_list.insert(tk.END, mesg)
+		msg_list.insert(tk.END, "Bot: Your ip didnt get sent to the others in chat")
+	elif msg == "!help":
+		line1 = 'server commands:'
+		line2 = '!serverip		returns server ip adress'
+		line3 = '!localip		returns local ip adress'
+		line4 = 'Note: whatever the bot returns does not get sent to the others'
+		msg_list.insert(tk.END, line1)
+		msg_list.insert(tk.END, line2)
+		msg_list.insert(tk.END, line3)
+		msg_list.insert(tk.END, line4)
+
 
 
 def on_closing(event=None):
@@ -110,6 +128,7 @@ def chatroom(host):
 def login(self):
 	username = e1.get()
 	password = e2.get()
+	global servername
 	servername = e3.get()
 	if username in users:
 		if password == users[username]:
