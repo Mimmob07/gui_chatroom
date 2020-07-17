@@ -35,7 +35,19 @@ and change it to
 {"test_user" : "password", "your_user" : "your_password"}
 ```
 > btw you can have spaces in your username and password(I just have a habit of putting underscores instead of spaces)
-
+# Bot Commands
+### !serverip
+When you type `!serverip` it returns whatever the servers ip adress was
+### !localip
+When you type `!localip` it returns your ip adress
+### !help
+the `!help` command returns:
+```
+server commands:
+!serverip		returns server ip adress
+!localip		returns local ip adress
+Note: whatever the bot returns does not get sent to the others
+````
 # ToDo
 - [x] Make a create user page
 - [x] Make a settings page
