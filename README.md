@@ -46,6 +46,7 @@ the `!help` command returns:
 server commands:
 !serverip		returns server ip adress
 !localip		returns local ip adress
+!raven			Starts raven-storm
 Note: whatever the bot returns does not get sent to the others
 ````
 # ToDo
