@@ -6,7 +6,7 @@ import ast
 import socket, threading, sys
 
 # other stuff
-f = open("/Users/mimmo/ssh_login_system/login_info.txt", "r")
+f = open("/Users/mimmo/gui_chatroom/login_info.txt", "r")
 contents = f.read()
 f.close()
 users = ast.literal_eval(contents)
@@ -157,7 +157,7 @@ def createnu(self):
         stuff = contents.split('}', 1)
         newlist = ', "' + username + '" : "' + password + '"}'
         print(newlist)
-        f = open("/Users/mimmo/ssh_login_system/login_info.txt", "w")
+        f = open("/Users/mimmo/gui_chatroom/login_info.txt", "w")
         for element in stuff:
             f.write(element)
         f.write(newlist)
