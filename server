@@ -2,7 +2,7 @@
 import socket, threading, sys
 import tkinter as tk
 
-def sub():
+def sub(self):
     global ip
     ip = e1.get()
     rw.destroy()
@@ -13,8 +13,12 @@ rw.title("IP")
 rw.configure(bg="grey14")
 rw.geometry("250x50")
 
+hostname = socket.gethostname()
+IPAddr = socket.gethostbyname(hostname)
+
 e1 = tk.Entry(rw)
 e1.bind("<Return>", sub)
+e1.insert(0, IPAddr)
 e1.pack(side=tk.LEFT)
 
 b1 = tk.Button(rw, text="Submit", command=sub).pack(side=tk.RIGHT)
@@ -23,19 +27,19 @@ rw.mainloop()
 
 
 host = (ip)
-port = 4000
+port = 4200
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((host,port))
 s.listen()
 clients = {}
 addresses = {}
-print(host)
-print("Server is ready...")
+print("[\u001b[32m✔︎\u001b[0m]      Server successfuly started running on ip: " + host + " port: " + str(port))
+print("[\u001b[32m✔︎\u001b[0m]      Server is running")
 serverRunning = True
 def handle_client(conn):
     try:
         data = conn.recv(1024).decode('utf8')
-        welcome = 'Welcome %s! If you ever want to quit, type "{quit}" to exit or type "{close}" to quit the server' % data
+        welcome = 'Welcome %s! If you ever want to quit, type "{quit}" to exit' % data
         conn.send(bytes(welcome, "utf8"))
         msg = "%s has joined the chat" % data
         broadcast(bytes(msg, "utf8"))
@@ -53,7 +57,7 @@ def handle_client(conn):
                 conn.send(bytes("{quit}", "utf8"))
                 conn.close()
                 del clients[conn]
-                broadcast(bytes("%s has left the chat." % data, "utf8"))
+                broadcast(bytes("[\u001b[31mx\u001b[0m]        %s has left the chat." % data, "utf8"))
                 break
     except:
         print("%s has left the chat." % data)
@@ -65,6 +69,6 @@ def broadcast(msg, prefix=""):
 while True:
     conn,addr = s.accept()
     conn.send("Enter username: ".encode("utf8"))
-    print("%s:%s has connected." % addr)
+    print("[\u001b[32m✔︎\u001b[0m]      %s:%s has connected." % addr)
     addresses[conn] = addr
     threading.Thread(target = handle_client, args = (conn,)).start()
