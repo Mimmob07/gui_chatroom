@@ -16,12 +16,12 @@ stuff = ""
 newlist = []
 login = ""
 inp = ("| => ")
-bag = "grey14"
+bag = "grey18"
 TK_SILENCE_DEPRECATION = 1
 
 rw = tk.Tk()
 rw.title("Login")
-rw.configure(bg="grey14")
+rw.configure(bg=bag)
 rw.geometry("500x200")
 
 
@@ -30,6 +30,7 @@ def echo_data(sock):
         try:
             msg = sock.recv(1024).decode('utf8')
             msg_list.insert(tk.END, msg)
+            msg_list.see(tk.END)
         except OSError:
             break
 
@@ -46,21 +47,27 @@ def send(event=None):
         meag = "Bot: The serverip is" + servername
         msg_list.insert(tk.END, meag)
     elif msg == "!localip":
-        mesg = "Bot: Your ip is " + socket.gethostname()
+        mesg = "Bot: Your ip is " + IPAddr
         msg_list.insert(tk.END, mesg)
         msg_list.insert(tk.END, "Bot: Your ip didnt get sent to the others in chat")
     elif msg == "!raven":
         os.system("./Raven-Storm")
+    elif msg == "!port":
+        msg_list.insert(tk.END, port)
     elif msg == "!help":
         line1 = 'server commands:'
-        line2 = '!serverip		returns server ip adress'
-        line3 = '!localip		returns local ip adress'
-        line4 = '!raven			Starts raven-storm'
+        line2 = '{quit}              closes the connection to the server and quits the app'
+        line3 = '!serverip		returns server ip adress'
+        line4 = '!localip		returns local ip adress'
+        line5 = '!raven		Starts raven-storm'
+        line6 = '!port          returns port your connected to the host by'
         line99 = 'Note: whatever the bot returns does not get sent to the others'
         msg_list.insert(tk.END, line1)
         msg_list.insert(tk.END, line2)
         msg_list.insert(tk.END, line3)
         msg_list.insert(tk.END, line4)
+        msg_list.insert(tk.END, line5)
+        msg_list.insert(tk.END, line6)
         msg_list.insert(tk.END, line99)
 
 
@@ -97,7 +104,8 @@ def settings():
 
 def chatroom(host):
     hot = host
-    port = 4000
+    global port
+    port = 4200
     global s
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     global top
@@ -117,10 +125,11 @@ def chatroom(host):
     messages_frame.pack()
 
     entry_field = tk.Entry(top, textvariable=my_msg, width="90")
+    entry_field.insert(0, username)
     entry_field.bind("<Return>", send)
     entry_field.pack(side=tk.LEFT)
 
-    but = tk.Button(top, text="Send", command=send)
+    but = tk.Button(top, text="      Send      ", command=send)
     but.pack()
 
     top.protocol("WM_DELETE_WINDOW", on_closing)
@@ -134,6 +143,7 @@ def chatroom(host):
 
 
 def login(self):
+    global username
     username = e1.get()
     password = e2.get()
     global servername
@@ -172,12 +182,12 @@ def new_usr():
     global nu
     nu = tk.Tk()
     nu.title("New User")
-    nu.configure(bg="grey14")
+    nu.configure(bg=bag)
     nu.geometry("500x200")
 
-    d = tk.Label(nu, text="Username:", fg='white', bg='grey14').grid(row=0)
-    e = tk.Label(nu, text="Password:", fg='white', bg='grey14').grid(row=1)
-    f = tk.Label(nu, text="Server IP:", fg='white', bg='grey14').grid(row=2)
+    d = tk.Label(nu, text="Username:", fg='white', bg=bag).grid(row=0)
+    e = tk.Label(nu, text="Password:", fg='white', bg=bag).grid(row=1)
+    f = tk.Label(nu, text="Server IP:", fg='white', bg=bag).grid(row=2)
 
     global en1
     en1 = tk.Entry(nu)
@@ -194,18 +204,20 @@ def new_usr():
 
     nu.mainloop()
 
+hostname = socket.gethostname()
+IPAddr = socket.gethostbyname(hostname)
 
-a = tk.Label(rw, text="Username:", fg='white', bg='grey14').grid(row=0)
-b = tk.Label(rw, text="Password:", fg='white', bg='grey14').grid(row=1)
-c = tk.Label(rw, text="Server IP:", fg='white', bg='grey14').grid(row=2)
-d = tk.Label(rw, text="New User:", fg='white', bg='grey14').grid(row=3)
+a = tk.Label(rw, text="Username:", fg='white', bg=bag).grid(row=0)
+b = tk.Label(rw, text="Password:", fg='white', bg=bag).grid(row=1)
+c = tk.Label(rw, text="Server IP:", fg='white', bg=bag).grid(row=2)
+d = tk.Label(rw, text="New User:", fg='white', bg=bag).grid(row=3)
 
 e1 = tk.Entry(rw)
 e2 = tk.Entry(rw, show="*")
 e3 = tk.Entry(rw)
 b1 = tk.Button(rw, text="New User", command=new_usr)
 e2.bind("<Return>", login)
-e3.insert(0, '192.168.1.10')
+e3.insert(0, IPAddr)
 e3.bind("<Return>", login)
 
 e1.grid(row=0, column=1)
