@@ -1,8 +1,6 @@
 # Gui_chatroom
 ![Image of chatroom](chatroomex.png)
 Its a chatroom with a Gui login, the login is all mine but the chatroom has some inspiration from stackoverflow
-# Last updated
-Wed Jul 29 7:47
 # Instalation
 ```
 $ git clone https://github.com/thepythonscript/gui_chatroom
