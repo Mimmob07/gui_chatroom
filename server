@@ -1,32 +1,10 @@
 #!/usr/bin/env python3
 import socket, threading, sys
-import tkinter as tk
-
-def sub(self):
-    global ip
-    ip = e1.get()
-    rw.destroy()
-
-
-rw = tk.Tk()
-rw.title("IP")
-rw.configure(bg="grey14")
-rw.geometry("250x50")
 
 hostname = socket.gethostname()
 IPAddr = socket.gethostbyname(hostname)
 
-e1 = tk.Entry(rw)
-e1.bind("<Return>", sub)
-e1.insert(0, IPAddr)
-e1.pack(side=tk.LEFT)
-
-b1 = tk.Button(rw, text="Submit", command=sub).pack(side=tk.RIGHT)
-
-rw.mainloop()
-
-
-host = (ip)
+host = (IPAddr)
 port = 4200
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((host,port))
