@@ -6,7 +6,7 @@ import ast
 import socket, threading, sys
 
 # other stuff
-f = open("/Users/mimmo/gui_chatroom/login_info.txt", "r")
+f = open("login_info.txt", "r")
 contents = f.read()
 f.close()
 users = ast.literal_eval(contents)
