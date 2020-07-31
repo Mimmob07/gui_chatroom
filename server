@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import socket, threading, sys
+import socket, threading, sys, time
 
 hostname = socket.gethostname()
 IPAddr = socket.gethostbyname(hostname)
@@ -11,7 +11,10 @@ s.bind((host,port))
 s.listen()
 clients = {}
 addresses = {}
+print("[\u001b[32m✔︎\u001b[0m]      Sockets bound")
+time.sleep(0.5)
 print("[\u001b[32m✔︎\u001b[0m]      Server successfuly started running on ip: " + host + " port: " + str(port))
+time.sleep(0.5)
 print("[\u001b[32m✔︎\u001b[0m]      Server is running")
 serverRunning = True
 def handle_client(conn):
@@ -29,16 +32,15 @@ def handle_client(conn):
 
             if msg1 != bytes("{quit}", "utf8"):
                 broadcast(msg1, data+": ")
-            elif msg1 == bytes("{close}", "utf8"):
-                exit()
             else:
                 conn.send(bytes("{quit}", "utf8"))
                 conn.close()
                 del clients[conn]
-                broadcast(bytes("[\u001b[31mx\u001b[0m]        %s has left the chat." % data, "utf8"))
+                broadcast(bytes("%s has left the chat." % data, "utf8"))
+                print("[\u001b[31mx\u001b[0m]      %s has left the chat." % data)
                 break
     except:
-        print("%s has left the chat." % data)
+        print("[\u001b[31mx\u001b[0m]       %s has left the chat." % data)
 def broadcast(msg, prefix=""):
     for sock in clients:
         sock.send(bytes(prefix, "utf8")+msg)
