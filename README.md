@@ -24,7 +24,7 @@ Right now you cant create a new user in the program you can only hard code it in
 like this 
 > note that the `Return` key is Binded to login on server ip
 ```
-$ nano login_info.txt
+$ nano .files/login_info.txt
 ```
 > inside nano
 ```
@@ -34,6 +34,13 @@ and change it to
 ```
 {"test_user" : "password", "your_user" : "your_password"}
 ```
+### Variables
+```python
+RECORD_MESSAGE = False
+PREVIOUS_UNAME = True
+PREVIOUS_IP = True
+```
+You can change the variables like if you change `RECORD_MESSAGE` to `True` then it will save all the messages to .files/messages.txt including a time stamp. the other ones just save previous answers.
 > btw you can have spaces in your username and password(I just have a habit of putting underscores instead of spaces)
 # Bot Commands
 ### !serverip
