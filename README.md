@@ -41,7 +41,6 @@ PREVIOUS_UNAME = True
 PREVIOUS_IP = True
 ```
 You can change the variables like if you change `RECORD_MESSAGE` to `True` then it will save all the messages to .files/messages.txt including a time stamp. the other ones just save previous answers.
-> btw you can have spaces in your username and password(I just have a habit of putting underscores instead of spaces)
 # Bot Commands
 ### !serverip
 When you type `!serverip` it returns whatever the servers ip adress was
