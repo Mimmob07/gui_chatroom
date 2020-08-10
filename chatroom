@@ -45,7 +45,6 @@ rw.title("Login")
 rw.configure(bg=bag)
 rw.geometry("500x200")
 
-
 def echo_data(sock):
     while True:
         try:
@@ -108,7 +107,8 @@ def q():
     sett.destroy()
 
 
-def ex():
+def ex(self):
+    s.send(bytes("{quit}", "utf8"))
     s.close()
     top.destroy()
     exit()
@@ -140,6 +140,7 @@ def chatroom(host):
     top = tk.Tk()
     top.title("Chat Room")
     top.configure(bg=bag)
+    top.bind("<Control-q>", ex)
 
     messages_frame = tk.Frame(top)
     global my_msg
@@ -187,6 +188,10 @@ def login(self):
             rw.destroy()
             print("\nlogin successful!\n")
             chatroom(servername)
+        else:
+            exit()
+    else:
+        exit()
 
 
 def createnu(self):
@@ -196,6 +201,8 @@ def createnu(self):
     if username in users:
         print("\nLogin name alredy exsist!\n")
         exit()
+    elif " " in username:
+        tk.messagebox.showerror("Error", "Your not allowed to have a space in your name.")
     else:
         users[username] = password
         stuff = contents.split('}', 1)
