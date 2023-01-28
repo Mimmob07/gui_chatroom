@@ -3,7 +3,7 @@
 Its a chatroom with a Gui login, the login is all mine but the chatroom has some inspiration from stackoverflow
 # Instalation
 ```
-$ git clone https://github.com/thepythonscript/gui_chatroom
+$ git clone https://github.com/Pineman834/gui_chatroom
 ```
 # Running the server
 ```
